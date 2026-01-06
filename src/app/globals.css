@@ -1,13 +1,14 @@
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --color-main: #101828;
+  --color-text: #475467;
+  --color-gray: #6c717b;
+  --color-button: #e44848;
+  --color-button-hover: #d84343;
+  --color-rating: #ffc531;
+  --color-gray-light: #dadde1;
+  --color-badges: #f2f4f7;
+  --color-inputs: #f7f7f7;
+  --color-white: #ffffff;
 }
 
 html,
@@ -17,9 +18,8 @@ body {
 }
 
 body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  color: var(--color-text);
+  background: var(--color-white);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -35,8 +35,93 @@ a {
   text-decoration: none;
 }
 
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
+ul,
+ol {
+  list-style: none;
+}
+
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+
+button {
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+img {
+  display: block;
+  width: 100%;
+}
+
+
+.container {
+  min-width: 320px;
+  max-width: 375px;
+  margin: 0 auto;
+  padding: 0 16px;
+
+  @media (min-width: 768px) {
+    max-width: 768px;
+    padding: 0 32px;
+  }
+
+  @media (min-width: 1024px) {
+    max-width: 1312px;
+    padding: 0 64px;
+  }
+}
+
+.button {
+  display: inline-block;
+  padding: 16px 57px;
+  border-radius: 200px;
+
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.button--primary {
+  color: var(--color-white);
+  background-color: var(--color-button);
+  transition: all 0.3s ease;
+
+
+  &:hover {
+    transition: all 0.3s ease;
+    background-color: var(--color-button-hover);
+  }
+}
+
+.button--secondary {
+  border: 1px solid var(--color-gray);
+  background-color: var(--color-white);
+  color: var(--color-main);
+  transition: all 0.3s ease;
+
+
+  &:hover {
+    transition: all 0.3s ease;
+    border: 1px solid var(--color-button-hover);
+    background-color: var(--color-gray-light);
   }
 }

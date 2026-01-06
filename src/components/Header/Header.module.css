@@ -1,0 +1,51 @@
+.header {
+  background-color: var(--color-badges);
+}
+
+.nav {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  height: 72px;
+  padding: 0 64px;
+}
+
+.logo {
+  max-width: 136px;
+  max-height: 16px;
+  scale: 1;
+  transition: scale 0.2s ease-in-out;
+}
+
+.logo:hover {
+  scale: 1.02;
+}
+
+.navLinksWrapper {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.navLinks {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
+
+.navLink {
+  font-weight: 500;
+  line-height: 24px;
+  font-size: 16px;
+  color: var(--color-main);
+  scale: 1;
+  transition: scale 0.2s ease-in-out;
+}
+
+.navLink:hover {
+  scale: 1.02;
+}
+
+.navLink.active {
+  color: var(--color-button-hover);
+}
