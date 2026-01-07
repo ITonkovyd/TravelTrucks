@@ -4,14 +4,9 @@
 
 .catalogLayout {
   display: flex;
-  align-items: center;
   gap: 64px;
 }
 
 .sidebar {
   width: 360px;
-}
-
-.catalogWrapper {
-  min-width: 0;
 }

@@ -5,7 +5,7 @@ import styles from "./Header.module.css";
 const Header = () => {
   return (
     <header className={styles.header}>
-      <nav className={`${styles.nav}`}>
+      <nav className={`${styles.nav} container`}>
         <Link href="/">
           <svg className={styles.logo}>
             <use href="/icons/sprite.svg#header_logo" />

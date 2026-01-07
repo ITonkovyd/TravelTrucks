@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import Header from "@/components/Header/Header";
 import "./globals.css";
+import TanStackProvider from "@/components/TanStackProvider/TanStackProvider";
 
 export const metadata: Metadata = {
   title: {
@@ -49,8 +50,10 @@ export default function RootLayout({
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </head>
       <body className={`${InterFont.variable}`}>
-        <Header />
-        {children}
+        <TanStackProvider>
+          <Header />
+          <main>{children}</main>
+        </TanStackProvider>
       </body>
     </html>
   );

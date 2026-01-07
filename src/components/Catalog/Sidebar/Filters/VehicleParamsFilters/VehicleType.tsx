@@ -11,10 +11,8 @@ const VehicleType = () => {
 
   const toggle = useCallback((key: string) => {
     setSelected((prev) => {
-      const next = new Set(prev);
-      if (next.has(key)) next.delete(key);
-      else next.add(key);
-      return Array.from(next);
+      if (prev.length === 1 && prev[0] === key) return [];
+      return [key];
     });
   }, []);
 
@@ -27,9 +25,11 @@ const VehicleType = () => {
           filters={VEHICLE_TYPES}
           onToggle={toggle}
           selected={selected}
+          single
+          name="type"
         />
       </div>
-      <input type="hidden" name="equipment" value={selectedArray.join(",")} />
+      <input type="hidden" name="type" value={selectedArray.join(",")} />
     </fieldset>
   );
 };
