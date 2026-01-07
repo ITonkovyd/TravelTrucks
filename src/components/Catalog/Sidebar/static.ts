@@ -1,9 +1,9 @@
 export const VEHICLE_EQUIPS = [
-  { key: "ac", label: "AC", icon: "wind" },
+  { key: "ac", label: "AC", icon: "AC" },
   { key: "automatic", label: "Automatic", icon: "diagram" },
-  { key: "kitchen", label: "Kitchen", icon: "cup-hot" },
-  { key: "tv", label: "TV", icon: "tv" },
-  { key: "bathroom", label: "Bathroom", icon: "ph_shower" },
+  { key: "kitchen", label: "Kitchen", icon: "kitchen" },
+  { key: "tv", label: "TV", icon: "TV" },
+  { key: "bathroom", label: "Bathroom", icon: "bathroom" },
 ];
 
 export const VEHICLE_TYPES = [
