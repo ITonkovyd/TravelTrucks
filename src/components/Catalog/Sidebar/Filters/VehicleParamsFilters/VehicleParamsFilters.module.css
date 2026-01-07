@@ -1,0 +1,17 @@
+.title {
+  font-weight: 600;
+  font-size: 20px;
+  color: var(--color-main);
+}
+
+.group {
+  border: 0;
+  padding: 0;
+  margin-bottom: 32px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}

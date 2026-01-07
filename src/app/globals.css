@@ -13,6 +13,8 @@
 
 html,
 body {
+  font-family: "Inter", sans-serif;
+  font-size: 16px;
   max-width: 100vw;
   overflow-x: hidden;
 }
@@ -95,7 +97,7 @@ img {
   padding: 16px 57px;
   border-radius: 200px;
 
-  font-weight: 600;
+  font-weight: 500;
   font-size: 16px;
   line-height: 24px;
 }
@@ -124,4 +126,107 @@ img {
     border: 1px solid var(--color-button-hover);
     background-color: var(--color-gray-light);
   }
+}
+
+.inputField {
+  min-width: 360px;
+  padding: 18px;
+  border: none;
+  border-radius: 12px;
+  background-color: var(--color-inputs);
+  color: var(--color-main);
+
+  &::placeholder {
+    color: var(--color-gray);
+  }
+
+  &:hover,
+  &:focus {
+    outline: none;
+  }
+}
+
+.filterCheckbox {
+  padding: 16px;
+  background-color: var(--color-white);
+  border: 1px solid var(--color-gray-light);
+  border-radius: 12px;
+
+  &:checked {
+    border: 1px solid var(--color-button);
+  }
+}
+
+.oc{
+  display:inline-block;
+}
+
+.oc-input{
+  position:absolute;
+  opacity:0;
+  width:1px;
+  height:1px;
+  overflow:hidden;
+  clip:rect(0 0 0 0);
+  clip-path:inset(50%);
+  white-space:nowrap;
+}
+
+.oc-card{
+  display:grid;
+  place-items:center;
+  gap:8px;
+  height:96px;
+
+  border:1px solid var(--color-gray-light);
+  border-radius:12px;
+  background-color:var(--color-white);
+  color:var(--color-text);
+
+  cursor:pointer;
+  user-select:none;
+
+  transition:border-color .15s ease,box-shadow .15s ease,color .15s ease,background-color .15s ease;
+}
+
+.oc-icon{
+  width:32px;
+  height:32px;
+  fill:currentColor;
+  align-self:flex-end;
+}
+
+.oc-text{
+  display:block;
+  text-align:center;
+  font-weight:500;
+  color:var(--color-main);
+  align-self:flex-start;
+}
+
+.oc-input:checked + .oc-card{
+  border-color:var(--color-button);
+}
+
+.oc-input:focus-visible + .oc-card{
+  outline:2px solid var(--color-button);
+  outline-offset:2px;
+}
+
+.oc-input:disabled + .oc-card{
+  opacity:.5;
+  cursor:not-allowed;
+}
+
+@media (hover:hover){
+  .oc:hover .oc-card{
+    box-shadow:0 0 0 3px rgba(0,0,0,.04);
+  }
+}
+
+.separator{
+  width:100%;
+  height:1px;
+  margin:24px 0;
+  background-color:var(--color-gray-light);
 }
