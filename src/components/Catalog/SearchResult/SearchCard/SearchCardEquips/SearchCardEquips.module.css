@@ -1,0 +1,18 @@
+.equips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.equipBadge {
+  display: flex;
+  max-width: max-content;
+  padding: 12px 18px;
+  gap: 8px;
+
+  font-weight: 500;
+
+  background-color: var(--color-gray-light);
+  color: var(--color-main);
+  border-radius: 100px;
+}

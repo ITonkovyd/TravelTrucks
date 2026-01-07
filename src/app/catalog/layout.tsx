@@ -10,7 +10,7 @@ const CatalogLayout = ({ filters, children }: CatalogLayoutProps) => {
     <section className={css.catalogSection}>
       <div className={`${css.catalogLayout} container`}>
         <aside className={`${css.sidebar}`}>{filters}</aside>
-        <div className={css.catalogWrapper}>{children}</div>
+        <section className={css.catalogWrapper}>{children}</section>
       </div>
     </section>
   );

@@ -1,6 +1,6 @@
 .heroImage {
   width: 100vw;
-  padding: 260px 0 260px 64px;
+  padding: 260px 0;
 
   background-image: url('../../../public/images/main/hero/Picture.png');
   background-size: cover;

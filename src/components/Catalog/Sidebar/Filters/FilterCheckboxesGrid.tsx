@@ -6,12 +6,16 @@ interface FilterCheckboxesGridProps {
   filters: FilterCheckboxesParams;
   onToggle?: (key: string) => void;
   selected?: string[];
+  single?: boolean;
+  name?: string;
 }
 
 const FilterCheckboxesGrid = ({
   filters,
   onToggle,
   selected = [],
+  single = false,
+  name,
 }: FilterCheckboxesGridProps) => {
   const selectedSet = useMemo(() => new Set(selected), [selected]);
 
@@ -24,9 +28,11 @@ const FilterCheckboxesGrid = ({
             <input
               id={id}
               className="oc-input"
-              type="checkbox"
+              type={single ? "radio" : "checkbox"}
+              name={single ? (name ?? "filter-single") : undefined}
               checked={selectedSet.has(equip.key)}
-              onChange={() => onToggle && onToggle(equip.key)}
+              onChange={() => !single && onToggle && onToggle(equip.key)}
+              onClick={() => single && onToggle && onToggle(equip.key)}
             />
             <span className="oc-card" aria-hidden="true">
               <svg className="oc-icon">
