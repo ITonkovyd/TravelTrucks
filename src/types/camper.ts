@@ -43,4 +43,7 @@ export interface Camper {
   reviews: CamperReview[];
 }
 
-export default Camper;
+export interface CampersResponse {
+  total: number;
+  items: Camper[];
+}

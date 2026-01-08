@@ -1,6 +1,6 @@
 "use client";
 
-import Camper from "@/types/camper";
+import { Camper } from "@/types/camper";
 import css from "./SearchCard.module.css";
 import Image from "next/image";
 import SearchCardHead from "./SearchCardHead/SearchCardHead";

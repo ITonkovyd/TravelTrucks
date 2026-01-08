@@ -1,4 +1,4 @@
-import Camper from "@/types/camper";
+import { Camper } from "@/types/camper";
 
 export const formatPrice = (price: number): string => {
   return `€${price.toFixed(2)}`;

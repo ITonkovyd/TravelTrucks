@@ -8,11 +8,11 @@ import { fetchCampers } from "@/lib/api";
 
 export async function generateMetadata() {
   try {
-    const data = await fetchCampers();
-    const total = data?.length || 0;
+    const data = await fetchCampers({ page: 1 });
+    const total = data.total;
     return {
-      title: `Каталог — ${total} оголошень`,
-      description: `Оголошення автодомів для оренди — знайдено ${total} варіантів.`,
+      title: `Catalog`,
+      description: `Campervan rental listings - total ${total} options.`,
     };
   } catch (e) {
     console.error("Failed to generate metadata for Catalog page", e);
@@ -27,7 +27,7 @@ const CatalogPage = async () => {
   const queryClient = new QueryClient();
   await queryClient.prefetchQuery({
     queryKey: ["catalogData"],
-    queryFn: () => fetchCampers(),
+    queryFn: () => fetchCampers({ page: 1 }),
   });
 
   return (
