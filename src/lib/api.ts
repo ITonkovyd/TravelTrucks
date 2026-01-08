@@ -1,16 +1,16 @@
-import Camper from "@/types/camper";
+import { CampersResponse } from "@/types/camper";
 import axios from "axios";
-
-interface ResponseData {
-  total: number;
-  items: Camper[];
-}
 
 const instance = axios.create({
   baseURL: process.env.NEXT_PUBLIC_BASE_URL + "campers/",
+  params: {
+    limit: 10,
+  },
 });
 
-export const fetchCampers = async () => {
-  const response = await instance.get<ResponseData>("");
-  return response.data.items;
+export const fetchCampers = async ({ page }: { page: number }) => {
+  const response = await instance.get<CampersResponse>("", {
+    params: { page },
+  });
+  return response.data;
 };

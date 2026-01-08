@@ -9,10 +9,7 @@ const Filters = () => {
       <VehicleEquipment />
       <VehicleType />
 
-      <button
-        type="submit"
-        className={`${css.searchButton} button button--primary`}
-      >
+      <button type="submit" className="button button--primary">
         Search
       </button>
     </div>

@@ -1,6 +1,18 @@
+.searchResult {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 52px;
+  position: relative;
+  width: 888px;
+
+}
+
 .list {
   display: flex;
   flex-direction: column;
   gap: 32px;
+  margin-bottom: 40px;
   width: 888px;
 }
