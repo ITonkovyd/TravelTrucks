@@ -7,6 +7,7 @@
 .equipBadge {
   display: flex;
   max-width: max-content;
+  height: 48px;
   padding: 12px 18px;
   gap: 8px;
 

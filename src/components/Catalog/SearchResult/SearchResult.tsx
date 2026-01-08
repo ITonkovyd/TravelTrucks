@@ -37,11 +37,14 @@ const SearchResult = () => {
   }
 
   return (
-    <ul className={css.list}>
-      {campers?.map((camper: Camper) => (
-        <SearchCard key={camper.id} camper={camper} />
-      ))}
-    </ul>
+    <section className={css.searchResult}>
+      <ul className={css.list}>
+        {campers?.map((camper: Camper) => (
+          <SearchCard key={camper.id} camper={camper} />
+        ))}
+      </ul>
+      <button className="button button--secondary">Load more</button>
+    </section>
   );
 };
 
