@@ -1,35 +1,59 @@
 "use client";
 
-import { useCallback, useMemo, useState } from "react";
 import { VEHICLE_TYPES } from "../../static";
 import css from "./VehicleParamsFilters.module.css";
-import FilterCheckboxesGrid from "../FilterCheckboxesGrid";
+import useCampersStore from "@/lib/store/store";
+
+type VehicleType = {
+  key: string;
+  label: string;
+  icon: string;
+};
 
 const VehicleType = () => {
-  const [selected, setSelected] = useState<string[]>([]);
-  const selectedArray = useMemo(() => Array.from(selected), [selected]);
+  const setSearchFilters = useCampersStore((state) => state.setSearchFilters);
+  const resetCampersList = useCampersStore((state) => state.resetCampersList);
+  const selected = useCampersStore((state) => state.searchFilters.form);
 
-  const toggle = useCallback((key: string) => {
-    setSelected((prev) => {
-      if (prev.length === 1 && prev[0] === key) return [];
-      return [key];
-    });
-  }, []);
+  const handleSelect = (type: VehicleType) => {
+    resetCampersList();
+    if (selected === type.key) {
+      setSearchFilters({ form: "" });
+      return;
+    }
+    setSearchFilters({ form: type.key });
+  };
 
   return (
     <fieldset className={css.group}>
       <legend className={css.title}>Vehicle types</legend>
       <div className="separator" />
       <div className={css.grid}>
-        <FilterCheckboxesGrid
-          filters={VEHICLE_TYPES}
-          onToggle={toggle}
-          selected={selected}
-          single
-          name="type"
-        />
+        {VEHICLE_TYPES.map((type) => {
+          const id = `type-${type.key}`;
+          return (
+            <label key={type.key} className="oc" htmlFor={id}>
+              <input
+                id={id}
+                className="oc-input"
+                type="radio"
+                name="type"
+                value={type.key}
+                checked={selected === type.key}
+                onChange={() => handleSelect(type)}
+                onClick={() => handleSelect(type)}
+              />
+              <span className="oc-card" aria-hidden="true">
+                <svg className="oc-icon">
+                  <use href={`/icons/sprite.svg#${type.icon}`}></use>
+                </svg>
+                <span className="oc-text">{type.label}</span>
+              </span>
+            </label>
+          );
+        })}
       </div>
-      <input type="hidden" name="type" value={selectedArray.join(",")} />
+      <input type="hidden" name="type" value={selected} />
     </fieldset>
   );
 };

@@ -1,11 +1,26 @@
 "use client";
 
-import { useState } from "react";
+import { useDebounce } from "use-debounce";
+import { useState, useEffect } from "react";
 import css from "./Location.module.css";
+import useCampersStore from "@/lib/store/store";
 
 const Location = () => {
-  const [locationName, setLocationName] = useState("");
-  const hasValue = locationName.trim().length > 0;
+  const setLocationName = useCampersStore((state) => state.setSearchFilters);
+  const locationName =
+    useCampersStore((state) => state.searchFilters.city) || "";
+  const [value, setValue] = useState(locationName);
+  const [city] = useDebounce(
+    value.charAt(0).toUpperCase() + value.slice(1),
+    300
+  );
+  const hasValue = value.trim().length > 0;
+  const filtersList = useCampersStore((state) => state.searchFilters);
+  console.log(filtersList);
+
+  useEffect(() => {
+    setLocationName({ city });
+  }, [city, setLocationName]);
 
   return (
     <div className={css.location}>
@@ -17,8 +32,8 @@ const Location = () => {
           id="location"
           type="text"
           placeholder="City"
-          value={locationName || ""}
-          onChange={(e) => setLocationName(e.target.value)}
+          value={value}
+          onChange={(e) => setValue(e.target.value)}
         />
         <label
           htmlFor="location"

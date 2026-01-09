@@ -6,6 +6,13 @@
   display: flex;
   justify-content: space-between;
   margin-bottom: 8px;
+  gap: 12px;
+  align-items: baseline;
+
+  & h2 {
+    max-width: 65%;
+    word-wrap: break-word;
+  }
 }
 
 .priceContainer {

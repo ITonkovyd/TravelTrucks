@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { formatPrice } from "@/helpers/helpers";
 import { CamperReview } from "@/types/camper";
 import css from "./SearchCardHead.module.css";
@@ -9,14 +8,19 @@ type Props = {
   rating: number;
   reviews: CamperReview[];
   location: string;
+  isFavorite: boolean;
+  handleToggle: () => void;
 };
 
-const Head = ({ name, price, rating, reviews, location }: Props) => {
-  const [isAddedToFavorites, setIsAddedToFavorites] = useState(false);
-  const addToFavorites = () => {
-    setIsAddedToFavorites(!isAddedToFavorites);
-  };
-
+const SearchCardHead = ({
+  name,
+  price,
+  rating,
+  reviews,
+  location,
+  isFavorite,
+  handleToggle,
+}: Props) => {
   return (
     <div className={css.head}>
       <div className={css.title}>
@@ -27,10 +31,10 @@ const Head = ({ name, price, rating, reviews, location }: Props) => {
             className={css.addToFavorites}
             aria-hidden="true"
             role="img"
-            onClick={addToFavorites}
+            onClick={handleToggle}
           >
             <use
-              href={`/icons/sprite.svg#${isAddedToFavorites ? "heartPressed" : "heart"}`}
+              href={`/icons/sprite.svg#${isFavorite ? "heartPressed" : "heart"}`}
             />
           </svg>
         </div>
@@ -58,4 +62,4 @@ const Head = ({ name, price, rating, reviews, location }: Props) => {
   );
 };
 
-export default Head;
+export default SearchCardHead;

@@ -11,20 +11,11 @@ import SearchCard from "./SearchCard/SearchCard";
 
 const ITEMS_PER_PAGE = 10;
 
-type Props = {
-  initialData: {
-    items: Camper[];
-    total: number;
-  };
-};
-
-const SearchResult = ({ initialData }: Props) => {
-  const hydrateCampers = useCampersStore((s) => s.hydrateCampers);
-  const setSearchFilters = useCampersStore((s) => s.setSearchFilters);
-  const campersList = useCampersStore((s) => s.campersList);
-  const currentPage = useCampersStore((s) => s.searchFilters.page);
-
-  console.log(currentPage);
+const SearchResult = () => {
+  const hydrateCampers = useCampersStore((state) => state.hydrateCampers);
+  const setSearchFilters = useCampersStore((state) => state.setSearchFilters);
+  const campersList = useCampersStore((state) => state.campersList);
+  const currentPage = useCampersStore((state) => state.searchFilters.page);
 
   const { data, isLoading, error } = useQuery({
     queryKey: ["catalogData", currentPage],
