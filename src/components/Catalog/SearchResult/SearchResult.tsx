@@ -20,9 +20,10 @@ const SearchResult = () => {
     (state) => state.activeSearchFilters
   );
 
-  const { data, isLoading, error } = useQuery({
+  const { data, isLoading, error, refetch } = useQuery({
     queryKey: ["catalogData", activeSearchFilters],
     queryFn: () => fetchCampers(activeSearchFilters),
+    enabled: false,
     refetchOnMount: false,
   });
 
@@ -47,9 +48,10 @@ const SearchResult = () => {
       {!isLoading && !error && (
         <button
           className="button button--secondary"
-          onClick={() =>
-            setSearchFilters({ page: activeSearchFilters.page + 1 })
-          }
+          onClick={() => {
+            setSearchFilters({ page: activeSearchFilters.page + 1 });
+            refetch();
+          }}
           disabled={
             activeSearchFilters.page * ITEMS_PER_PAGE >= (data?.total || 0)
           }
