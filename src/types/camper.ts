@@ -42,8 +42,3 @@ export interface Camper {
   gallery: CamperGalleryItem[];
   reviews: CamperReview[];
 }
-
-export interface CampersResponse {
-  total: number;
-  items: Camper[];
-}

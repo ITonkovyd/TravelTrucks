@@ -6,7 +6,8 @@ import css from "./Location.module.css";
 import useCampersStore from "@/lib/store/store";
 
 const Location = () => {
-  const setLocationName = useCampersStore((state) => state.setSearchFilters);
+  const setSearchFilters = useCampersStore((state) => state.setSearchFilters);
+  const resetCampersList = useCampersStore((state) => state.resetCampersList);
   const locationName =
     useCampersStore((state) => state.searchFilters.city) || "";
   const [value, setValue] = useState(locationName);
@@ -14,13 +15,12 @@ const Location = () => {
     value.charAt(0).toUpperCase() + value.slice(1),
     300
   );
-  const hasValue = value.trim().length > 0;
-  const filtersList = useCampersStore((state) => state.searchFilters);
-  console.log(filtersList);
+  const hasValue = value.trim() !== "";
 
   useEffect(() => {
-    setLocationName({ city });
-  }, [city, setLocationName]);
+    setSearchFilters({ city, page: 1 });
+    resetCampersList();
+  }, [city, setSearchFilters, resetCampersList]);
 
   return (
     <div className={css.location}>

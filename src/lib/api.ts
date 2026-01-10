@@ -1,16 +1,38 @@
-import { CampersResponse } from "@/types/camper";
+import { Camper } from "@/types/camper";
 import axios from "axios";
+
+type CampersResponse = {
+  total: number;
+  items: Camper[];
+};
+
+import type { SearchFilters } from "@/lib/store/store";
 
 const instance = axios.create({
   baseURL: process.env.NEXT_PUBLIC_BASE_URL + "campers/",
-  params: {
-    limit: 10,
-  },
 });
 
-export const fetchCampers = async ({ page }: { page: number }) => {
+export const fetchCampers = async (params: SearchFilters) => {
+  const camperEquipment = params.camperEquipment ?? [];
+
+  const equipmentParams = camperEquipment.reduce<Record<string, string>>(
+    (acc, key) => {
+      acc[key] = key === "transmission" ? "automatic" : "true";
+      return acc;
+    },
+    {}
+  );
+
+  const queryParams = {
+    limit: 10,
+    page: params.page,
+    ...(params.city ? { location: params.city } : {}),
+    ...(params.form ? { form: params.form } : {}),
+    ...equipmentParams,
+  };
+
   const response = await instance.get<CampersResponse>("", {
-    params: { page },
+    params: queryParams,
   });
   return response.data;
 };

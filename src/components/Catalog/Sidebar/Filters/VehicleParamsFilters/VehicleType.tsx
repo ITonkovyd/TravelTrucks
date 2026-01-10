@@ -18,10 +18,10 @@ const VehicleType = () => {
   const handleSelect = (type: VehicleType) => {
     resetCampersList();
     if (selected === type.key) {
-      setSearchFilters({ form: "" });
+      setSearchFilters({ form: "", page: 1 });
       return;
     }
-    setSearchFilters({ form: type.key });
+    setSearchFilters({ form: type.key, page: 1 });
   };
 
   return (

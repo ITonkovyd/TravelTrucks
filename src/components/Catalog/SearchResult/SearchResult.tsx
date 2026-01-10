@@ -15,11 +15,13 @@ const SearchResult = () => {
   const hydrateCampers = useCampersStore((state) => state.hydrateCampers);
   const setSearchFilters = useCampersStore((state) => state.setSearchFilters);
   const campersList = useCampersStore((state) => state.campersList);
-  const currentPage = useCampersStore((state) => state.searchFilters.page);
+  const searchFilters = useCampersStore((state) => state.searchFilters);
+
+  console.log(searchFilters);
 
   const { data, isLoading, error } = useQuery({
-    queryKey: ["catalogData", currentPage],
-    queryFn: () => fetchCampers({ page: currentPage }),
+    queryKey: ["catalogData", searchFilters],
+    queryFn: () => fetchCampers(searchFilters),
     refetchOnMount: false,
   });
 
@@ -53,8 +55,8 @@ const SearchResult = () => {
       ) : (
         <button
           className="button button--secondary"
-          onClick={() => setSearchFilters({ page: currentPage + 1 })}
-          disabled={currentPage * ITEMS_PER_PAGE >= (data?.total || 0)}
+          onClick={() => setSearchFilters({ page: searchFilters.page + 1 })}
+          disabled={searchFilters.page * ITEMS_PER_PAGE >= (data?.total || 0)}
         >
           Load more
         </button>

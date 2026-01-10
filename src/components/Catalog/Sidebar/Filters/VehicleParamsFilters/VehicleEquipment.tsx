@@ -8,10 +8,12 @@ const VehicleEquipment = () => {
   const selected =
     useCampersStore((state) => state.searchFilters.camperEquipment) || [];
   const setSearchFilterArray = useCampersStore((state) => state.setSearchFilterArray);
+  const setSearchFilters = useCampersStore((state) => state.setSearchFilters);
   const resetCampersList = useCampersStore((state) => state.resetCampersList);
 
   const handleFilterChange = (key: string) => {
     resetCampersList();
+    setSearchFilters({ page: 1 });
     setSearchFilterArray("camperEquipment", key);
   };
 

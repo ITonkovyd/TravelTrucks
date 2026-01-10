@@ -2,7 +2,7 @@ import { Camper } from "@/types/camper";
 import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
 
-type SearchFilters = {
+export type SearchFilters = {
   city?: string;
   camperEquipment?: string[];
   form?: string;
@@ -24,7 +24,7 @@ type Action = {
   removeFavoriteCamper: (camperId: string) => void;
 };
 
-const initialState: State = {
+export const initialState: State = {
   searchFilters: {
     city: "",
     camperEquipment: [],
