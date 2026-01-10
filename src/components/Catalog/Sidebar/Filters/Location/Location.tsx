@@ -1,11 +1,19 @@
 "use client";
 
-import { useState } from "react";
 import css from "./Location.module.css";
+import { useState, useEffect } from "react";
 
-const Location = () => {
-  const [locationName, setLocationName] = useState("");
-  const hasValue = locationName.trim().length > 0;
+type Props = {
+  value: string;
+  onChange: (value: string) => void;
+};
+
+const Location = ({ value, onChange }: Props) => {
+  const [inputValue, setInputValue] = useState(value);
+  useEffect(() => {
+    setInputValue(value);
+  }, [value]);
+  const hasValue = inputValue.trim() !== "";
 
   return (
     <div className={css.location}>
@@ -17,8 +25,11 @@ const Location = () => {
           id="location"
           type="text"
           placeholder="City"
-          value={locationName || ""}
-          onChange={(e) => setLocationName(e.target.value)}
+          value={inputValue}
+          onChange={(e) => {
+            setInputValue(e.target.value);
+            onChange(e.target.value);
+          }}
         />
         <label
           htmlFor="location"

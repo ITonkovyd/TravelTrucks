@@ -11,24 +11,19 @@ import SearchCard from "./SearchCard/SearchCard";
 
 const ITEMS_PER_PAGE = 10;
 
-type Props = {
-  initialData: {
-    items: Camper[];
-    total: number;
-  };
-};
+const SearchResult = () => {
 
-const SearchResult = ({ initialData }: Props) => {
-  const hydrateCampers = useCampersStore((s) => s.hydrateCampers);
-  const setSearchFilters = useCampersStore((s) => s.setSearchFilters);
-  const campersList = useCampersStore((s) => s.campersList);
-  const currentPage = useCampersStore((s) => s.searchFilters.page);
+  const hydrateCampers = useCampersStore((state) => state.hydrateCampers);
+  const setSearchFilters = useCampersStore((state) => state.setSearchFilters);
+  const campersList = useCampersStore((state) => state.campersList);
+  const activeSearchFilters = useCampersStore(
+    (state) => state.activeSearchFilters
+  );
 
-  console.log(currentPage);
-
-  const { data, isLoading, error } = useQuery({
-    queryKey: ["catalogData", currentPage],
-    queryFn: () => fetchCampers({ page: currentPage }),
+  const { data, isLoading, error, refetch } = useQuery({
+    queryKey: ["catalogData", activeSearchFilters],
+    queryFn: () => fetchCampers(activeSearchFilters),
+    enabled: true,
     refetchOnMount: false,
   });
 
@@ -50,7 +45,22 @@ const SearchResult = ({ initialData }: Props) => {
         </>
       )}
 
-      {isLoading ? (
+      {!isLoading && !error && (
+        <button
+          className="button button--secondary"
+          onClick={() => {
+            setSearchFilters({ page: activeSearchFilters.page + 1 });
+            refetch();
+          }}
+          disabled={
+            activeSearchFilters.page * ITEMS_PER_PAGE >= (data?.total || 0)
+          }
+        >
+          Load more
+        </button>
+      )}
+
+      {isLoading && (
         <ThreeCircles
           visible={true}
           height="80"
@@ -59,17 +69,13 @@ const SearchResult = ({ initialData }: Props) => {
           ariaLabel="three-circles-loading"
           wrapperClass={css.loaderOverlay}
         />
-      ) : (
-        <button
-          className="button button--secondary"
-          onClick={() => setSearchFilters({ page: currentPage + 1 })}
-          disabled={currentPage * ITEMS_PER_PAGE >= (data?.total || 0)}
-        >
-          Load more
-        </button>
       )}
 
-      {error && <div>Error loading search results.</div>}
+      {error && (
+        <div>
+          Error loading search results. Try to change filters and search again.
+        </div>
+      )}
     </section>
   );
 };

@@ -1,36 +1,42 @@
 "use client";
-
-import { useState, useMemo, useCallback } from "react";
 import { VEHICLE_EQUIPS } from "../../static";
 import css from "./VehicleParamsFilters.module.css";
 
-import FilterCheckboxesGrid from "../FilterCheckboxesGrid";
+type Props = {
+  selected: string[];
+  onChange: (key: string) => void;
+};
 
-const VehicleEquipment = () => {
-  const [selected, setSelected] = useState<string[]>([]);
-  const selectedArray = useMemo(() => Array.from(selected), [selected]);
-
-  const toggle = useCallback((key: string) => {
-    setSelected((prev) => {
-      const next = new Set(prev);
-      if (next.has(key)) next.delete(key);
-      else next.add(key);
-      return Array.from(next);
-    });
-  }, []);
-
+const VehicleEquipment = ({ selected, onChange }: Props) => {
   return (
     <fieldset className={css.group}>
       <legend className={css.title}>Vehicle equipment</legend>
       <div className="separator" />
       <div className={css.grid}>
-        <FilterCheckboxesGrid
-          filters={VEHICLE_EQUIPS}
-          onToggle={toggle}
-          selected={selected}
-        />
+        {VEHICLE_EQUIPS.map((equip) => {
+          const id = `equip-${equip.key}`;
+          return (
+            <label key={equip.key} className="oc" htmlFor={id}>
+              <input
+                id={id}
+                className="oc-input"
+                type="checkbox"
+                name="equipment"
+                value={equip.key}
+                checked={selected.includes(equip.key)}
+                onChange={() => onChange(equip.key)}
+              />
+              <span className="oc-card" aria-hidden="true">
+                <svg className="oc-icon">
+                  <use href={`/icons/sprite.svg#${equip.icon}`}></use>
+                </svg>
+                <span className="oc-text">{equip.label}</span>
+              </span>
+            </label>
+          );
+        })}
       </div>
-      <input type="hidden" name="equipment" value={selectedArray.join(",")} />
+      <input type="hidden" name="equipment" value={selected.join(",")} />
     </fieldset>
   );
 };
