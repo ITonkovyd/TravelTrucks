@@ -80,7 +80,12 @@ const useCampersStore = create<State & Action>()(
 
       hydrateCampers: (items) =>
         set((state) => ({
-          campersList: [...state.campersList, ...items],
+          campersList: [
+            ...state.campersList,
+            ...items.filter(
+              (item) => !state.campersList.some((c) => c.id === item.id)
+            ),
+          ],
         })),
 
       addFavoriteCamper: (camper) =>

@@ -23,7 +23,7 @@ const SearchResult = () => {
   const { data, isLoading, error, refetch } = useQuery({
     queryKey: ["catalogData", activeSearchFilters],
     queryFn: () => fetchCampers(activeSearchFilters),
-    enabled: false,
+    enabled: true,
     refetchOnMount: false,
   });
 
