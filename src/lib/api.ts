@@ -37,7 +37,7 @@ export const fetchCampers = async (params: SearchFilters) => {
   return response.data;
 };
 
-// export const fetchCamperById = async (camperId: string) => {
-//   const response = await instance.get<Camper>(`/${camperId}`);
-//   return response.data;
-// };
+export const fetchCamperById = async (camperId: string) => {
+  const response = await instance.get<Camper>(`${camperId}`);
+  return response.data;
+};

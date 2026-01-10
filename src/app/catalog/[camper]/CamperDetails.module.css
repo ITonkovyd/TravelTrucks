@@ -47,3 +47,32 @@
   border-radius: 10px;
   background-color: var(--color-inputs);
 }
+
+.loaderContainer {
+  min-height: 60vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.errorContainer {
+  min-height: 60vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.errorTitle {
+  font-size: 32px;
+  color: var(--color-main);
+  margin: 0;
+}
+
+.errorMessage {
+  font-size: 18px;
+  color: var(--color-text);
+  text-align: center;
+  margin: 0;
+}

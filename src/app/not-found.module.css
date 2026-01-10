@@ -1,0 +1,33 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+  text-align: center;
+  padding: 20px;
+}
+
+.title {
+  font-size: 72px;
+  font-weight: bold;
+  color: var(--color-button);
+  margin: 0;
+}
+
+.subtitle {
+  font-size: 32px;
+  font-weight: 600;
+  color: var(--color-main);
+  margin: 16px 0;
+}
+
+.message {
+  font-size: 18px;
+  color: var(--color-text);
+  margin-bottom: 32px;
+}
+
+.link {
+  text-decoration: none;
+}

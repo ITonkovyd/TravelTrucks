@@ -1,72 +1,43 @@
 "use client";
 
 import { useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { fetchCamperById } from "@/lib/api";
+import { ThreeCircles } from "react-loader-spinner";
+import { notFound } from "next/navigation";
 import CamperGallery from "@/components/Catalog/Camper/CamperGallery/CamperGallery";
 import CamperHead from "@/components/Catalog/Camper/CamperHead/CamperHead";
 import css from "./CamperDetails.module.css";
 import BookingForm from "@/components/Catalog/Camper/BookingForm/BookingForm";
 import CamperFeatures from "@/components/Catalog/Camper/CamperFeatures/CamperFeatures";
 import CamperReviews from "@/components/Catalog/Camper/CamperReviews/CamperReviews";
-import { CamperForm } from "@/types/camper";
 
-const CAMPER = {
-  id: "1",
-  name: "Road Bear C 23-25",
-  price: 10000,
-  rating: 4.5,
-  location: "Ukraine, Kyiv",
-  description:
-    "Embadventures, promising comfort, style, and the freedom to explore at your own pace.",
-  form: "alcove" as CamperForm,
-  length: "7.3m",
-  width: "2.65m",
-  height: "3.65m",
-  tank: "208l",
-  consumption: "30l/100km",
-  transmission: "automatic",
-  engine: "diesel",
-  AC: true,
-  bathroom: true,
-  kitchen: false,
-  TV: true,
-  radio: true,
-  refrigerator: false,
-  microwave: true,
-  gas: false,
-  water: true,
-  gallery: [
-    {
-      thumb: "https://ftp.goit.study/img/campers-test-task/1-1.webp",
-      original: "https://ftp.goit.study/img/campers-test-task/1-1.webp",
-    },
-    {
-      thumb: "https://ftp.goit.study/img/campers-test-task/1-2.webp",
-      original: "https://ftp.goit.study/img/campers-test-task/1-2.webp",
-    },
-    {
-      thumb: "https://ftp.goit.study/img/campers-test-task/1-3.webp",
-      original: "https://ftp.goit.study/img/campers-test-task/1-3.webp",
-    },
-  ],
-  reviews: [
-    {
-      reviewer_name: "Alice",
-      reviewer_rating: 5,
-      comment:
-        "Exceptional RV! The Road Bear C 23-25 provided a comfortable and enjoyable journey for my family. The amenities were fantastic, and the space was well-utilized. Highly recommended!",
-    },
-    {
-      reviewer_name: "Bob",
-      reviewer_rating: 4,
-      comment:
-        "Great RV for a road trip. Spacious and well-equipped. Only minor issues with the bathroom setup, but overall a wonderful experience.",
-    },
-  ],
+type Props = {
+  camperId: string;
 };
 
-const CamperDetails = () => {
+const CamperDetails = ({ camperId }: Props) => {
   const [selectedSection, setSelectedSection] = useState("Features");
   const sectionsList = ["Features", "Reviews"];
+
+  const {
+    data: CAMPER,
+    isLoading,
+    error,
+  } = useQuery({
+    queryKey: ["camperDetails", camperId],
+    queryFn: () => fetchCamperById(camperId),
+    retry: (failureCount, error: any) => {
+      // Не retry для 404 або 429
+      if (error?.response?.status === 404 || error?.response?.status === 429) {
+        return false;
+      }
+      return failureCount < 2;
+    },
+    staleTime: 1000 * 60 * 5,
+    refetchOnMount: false,
+    refetchOnWindowFocus: false,
+  });
 
   const goToReviews = () => {
     setSelectedSection("Reviews");
@@ -80,6 +51,48 @@ const CamperDetails = () => {
       window.scrollTo({ top: y, behavior: "smooth" });
     }
   };
+
+  if (isLoading) {
+    return (
+      <section>
+        <div className={`container ${css.loaderContainer}`}>
+          <ThreeCircles
+            visible={true}
+            height="80"
+            width="80"
+            color="#666"
+            ariaLabel="three-circles-loading"
+          />
+        </div>
+      </section>
+    );
+  }
+
+  if (error || !CAMPER) {
+    const is429Error = (error as any)?.response?.status === 429;
+    return (
+      <section>
+        <div className={`container ${css.errorContainer}`}>
+          <h2 className={css.errorTitle}>
+            {is429Error ? "Too Many Requests" : "Camper not found"}
+          </h2>
+          <p className={css.errorMessage}>
+            {is429Error
+              ? "Please wait a moment and try again. The server is rate limiting requests."
+              : "The camper you are looking for does not exist."}
+          </p>
+          {is429Error && (
+            <button
+              onClick={() => window.location.reload()}
+              className="button button--primary"
+            >
+              Try Again
+            </button>
+          )}
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section>
