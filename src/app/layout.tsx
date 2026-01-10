@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import Header from "@/components/Header/Header";
 import "./globals.css";
 import TanStackProvider from "@/components/TanStackProvider/TanStackProvider";
@@ -53,6 +55,18 @@ export default function RootLayout({
         <TanStackProvider>
           <Header />
           <main>{children}</main>
+          <ToastContainer
+            position="top-right"
+            autoClose={3000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+            theme="light"
+          />
         </TanStackProvider>
       </body>
     </html>

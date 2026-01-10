@@ -7,6 +7,7 @@ import css from "./CamperDetails.module.css";
 import BookingForm from "@/components/Catalog/Camper/BookingForm/BookingForm";
 import CamperFeatures from "@/components/Catalog/Camper/CamperFeatures/CamperFeatures";
 import CamperReviews from "@/components/Catalog/Camper/CamperReviews/CamperReviews";
+import { CamperForm } from "@/types/camper";
 
 const CAMPER = {
   id: "1",
@@ -16,7 +17,7 @@ const CAMPER = {
   location: "Ukraine, Kyiv",
   description:
     "Embadventures, promising comfort, style, and the freedom to explore at your own pace.",
-  form: "alcove",
+  form: "alcove" as CamperForm,
   length: "7.3m",
   width: "2.65m",
   height: "3.65m",
@@ -109,10 +110,34 @@ const CamperDetails = () => {
         </div>
         <div className={css.overview}>
           <div className={css.overviewSectionWrapper}>
-            {selectedSection === "Features" && <CamperFeatures />}
-            {selectedSection === "Reviews" && <CamperReviews />}
+            {selectedSection === "Features" && (
+              <CamperFeatures
+                equips={{
+                  AC: CAMPER.AC,
+                  bathroom: CAMPER.bathroom,
+                  kitchen: CAMPER.kitchen,
+                  TV: CAMPER.TV,
+                  radio: CAMPER.radio,
+                  refrigerator: CAMPER.refrigerator,
+                  microwave: CAMPER.microwave,
+                  gas: CAMPER.gas,
+                  water: CAMPER.water,
+                }}
+                details={{
+                  form: CAMPER.form,
+                  length: CAMPER.length,
+                  width: CAMPER.width,
+                  height: CAMPER.height,
+                  tank: CAMPER.tank,
+                  consumption: CAMPER.consumption,
+                }}
+              />
+            )}
+            {selectedSection === "Reviews" && (
+              <CamperReviews reviews={CAMPER.reviews} />
+            )}
           </div>
-          <div className={css.overviewSectionWrapper}>
+          <div>
             <BookingForm />
           </div>
         </div>

@@ -39,8 +39,11 @@
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 40px;
+  min-height: max-content;
 }
 
 .overviewSectionWrapper {
   padding: 44px 52px;
+  border-radius: 10px;
+  background-color: var(--color-inputs);
 }
