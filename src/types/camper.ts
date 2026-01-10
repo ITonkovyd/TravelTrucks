@@ -9,7 +9,7 @@ export interface CamperReview {
   comment: string;
 }
 
-type CamperForm = "alcove" | "fullyIntegrated" | "panelTruck";
+export type CamperForm = "alcove" | "fullyIntegrated" | "panelTruck";
 
 type CamperTransmission = "manual" | "automatic";
 
