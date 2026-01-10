@@ -4,7 +4,6 @@ import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { fetchCamperById } from "@/lib/api";
 import { ThreeCircles } from "react-loader-spinner";
-import { notFound } from "next/navigation";
 import CamperGallery from "@/components/Catalog/Camper/CamperGallery/CamperGallery";
 import CamperHead from "@/components/Catalog/Camper/CamperHead/CamperHead";
 import css from "./CamperDetails.module.css";
