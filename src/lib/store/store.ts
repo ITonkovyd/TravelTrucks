@@ -7,16 +7,19 @@ export type SearchFilters = {
   camperEquipment?: string[];
   form?: string;
   page: number;
+  limit?: number;
 };
 
 type State = {
   searchFilters: SearchFilters;
+  activeSearchFilters: SearchFilters;
   campersList: Camper[];
   favoriteCampers: Camper[];
 };
 
 type Action = {
-  setSearchFilters: (params: Partial<SearchFilters>) => void;
+  setSearchFilters: (params: Partial<SearchFilters>) => void; // draft
+  setActiveSearchFilters: (params: SearchFilters) => void;
   setSearchFilterArray: (key: keyof SearchFilters, value: string) => void;
   hydrateCampers: (items: Camper[]) => void;
   resetCampersList: () => void;
@@ -26,6 +29,14 @@ type Action = {
 
 export const initialState: State = {
   searchFilters: {
+    city: "",
+    camperEquipment: [],
+    form: "",
+    page: 1,
+    limit: 10,
+  },
+
+  activeSearchFilters: {
     city: "",
     camperEquipment: [],
     form: "",
@@ -46,6 +57,11 @@ const useCampersStore = create<State & Action>()(
             ...state.searchFilters,
             ...filters,
           },
+        })),
+
+      setActiveSearchFilters: (filters) =>
+        set(() => ({
+          activeSearchFilters: { ...filters },
         })),
 
       resetCampersList: () => set(() => ({ campersList: [] })),

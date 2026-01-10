@@ -1,12 +1,11 @@
 import { Camper } from "@/types/camper";
 import axios from "axios";
+import type { SearchFilters } from "@/lib/store/store";
 
 type CampersResponse = {
   total: number;
   items: Camper[];
 };
-
-import type { SearchFilters } from "@/lib/store/store";
 
 const instance = axios.create({
   baseURL: process.env.NEXT_PUBLIC_BASE_URL + "campers/",

@@ -2,28 +2,13 @@
 
 import { VEHICLE_TYPES } from "../../static";
 import css from "./VehicleParamsFilters.module.css";
-import useCampersStore from "@/lib/store/store";
 
-type VehicleType = {
-  key: string;
-  label: string;
-  icon: string;
+type Props = {
+  selected: string;
+  onChange: (key: string) => void;
 };
 
-const VehicleType = () => {
-  const setSearchFilters = useCampersStore((state) => state.setSearchFilters);
-  const resetCampersList = useCampersStore((state) => state.resetCampersList);
-  const selected = useCampersStore((state) => state.searchFilters.form);
-
-  const handleSelect = (type: VehicleType) => {
-    resetCampersList();
-    if (selected === type.key) {
-      setSearchFilters({ form: "", page: 1 });
-      return;
-    }
-    setSearchFilters({ form: type.key, page: 1 });
-  };
-
+const VehicleType = ({ selected, onChange }: Props) => {
   return (
     <fieldset className={css.group}>
       <legend className={css.title}>Vehicle types</legend>
@@ -40,8 +25,8 @@ const VehicleType = () => {
                 name="type"
                 value={type.key}
                 checked={selected === type.key}
-                onChange={() => handleSelect(type)}
-                onClick={() => handleSelect(type)}
+                onChange={() => onChange(type.key)}
+                onClick={() => onChange(type.key)}
               />
               <span className="oc-card" aria-hidden="true">
                 <svg className="oc-icon">

@@ -1,22 +1,13 @@
 "use client";
-
 import { VEHICLE_EQUIPS } from "../../static";
 import css from "./VehicleParamsFilters.module.css";
-import useCampersStore from "@/lib/store/store";
 
-const VehicleEquipment = () => {
-  const selected =
-    useCampersStore((state) => state.searchFilters.camperEquipment) || [];
-  const setSearchFilterArray = useCampersStore((state) => state.setSearchFilterArray);
-  const setSearchFilters = useCampersStore((state) => state.setSearchFilters);
-  const resetCampersList = useCampersStore((state) => state.resetCampersList);
+type Props = {
+  selected: string[];
+  onChange: (key: string) => void;
+};
 
-  const handleFilterChange = (key: string) => {
-    resetCampersList();
-    setSearchFilters({ page: 1 });
-    setSearchFilterArray("camperEquipment", key);
-  };
-
+const VehicleEquipment = ({ selected, onChange }: Props) => {
   return (
     <fieldset className={css.group}>
       <legend className={css.title}>Vehicle equipment</legend>
@@ -33,7 +24,7 @@ const VehicleEquipment = () => {
                 name="equipment"
                 value={equip.key}
                 checked={selected.includes(equip.key)}
-                onChange={() => handleFilterChange(equip.key)}
+                onChange={() => onChange(equip.key)}
               />
               <span className="oc-card" aria-hidden="true">
                 <svg className="oc-icon">

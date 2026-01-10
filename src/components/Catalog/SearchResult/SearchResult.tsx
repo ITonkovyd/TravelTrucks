@@ -12,16 +12,17 @@ import SearchCard from "./SearchCard/SearchCard";
 const ITEMS_PER_PAGE = 10;
 
 const SearchResult = () => {
+
   const hydrateCampers = useCampersStore((state) => state.hydrateCampers);
   const setSearchFilters = useCampersStore((state) => state.setSearchFilters);
   const campersList = useCampersStore((state) => state.campersList);
-  const searchFilters = useCampersStore((state) => state.searchFilters);
-
-  console.log(searchFilters);
+  const activeSearchFilters = useCampersStore(
+    (state) => state.activeSearchFilters
+  );
 
   const { data, isLoading, error } = useQuery({
-    queryKey: ["catalogData", searchFilters],
-    queryFn: () => fetchCampers(searchFilters),
+    queryKey: ["catalogData", activeSearchFilters],
+    queryFn: () => fetchCampers(activeSearchFilters),
     refetchOnMount: false,
   });
 
@@ -43,7 +44,21 @@ const SearchResult = () => {
         </>
       )}
 
-      {isLoading ? (
+      {!isLoading && !error && (
+        <button
+          className="button button--secondary"
+          onClick={() =>
+            setSearchFilters({ page: activeSearchFilters.page + 1 })
+          }
+          disabled={
+            activeSearchFilters.page * ITEMS_PER_PAGE >= (data?.total || 0)
+          }
+        >
+          Load more
+        </button>
+      )}
+
+      {isLoading && (
         <ThreeCircles
           visible={true}
           height="80"
@@ -52,17 +67,13 @@ const SearchResult = () => {
           ariaLabel="three-circles-loading"
           wrapperClass={css.loaderOverlay}
         />
-      ) : (
-        <button
-          className="button button--secondary"
-          onClick={() => setSearchFilters({ page: searchFilters.page + 1 })}
-          disabled={searchFilters.page * ITEMS_PER_PAGE >= (data?.total || 0)}
-        >
-          Load more
-        </button>
       )}
 
-      {error && <div>Error loading search results.</div>}
+      {error && (
+        <div>
+          Error loading search results. Try to change filters and search again.
+        </div>
+      )}
     </section>
   );
 };
