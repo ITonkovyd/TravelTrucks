@@ -18,7 +18,7 @@ export const generateMetadata = async () => {
       description: `Campervan rental listings - total ${total} options.`,
     };
   } catch (e) {
-    console.error("Failed to generate metadata for Catalog page", e);
+    // Fallback metadata if API is unavailable
     return {
       title: "Catalog",
       description: "Catalog of camper rentals",

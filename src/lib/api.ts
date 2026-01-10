@@ -1,6 +1,6 @@
 import { Camper } from "@/types/camper";
 import axios from "axios";
-import type { SearchFilters } from "@/lib/store/store";
+import { SearchFilters } from "@/lib/store/store";
 
 type CampersResponse = {
   total: number;
@@ -11,7 +11,7 @@ const instance = axios.create({
   baseURL: process.env.NEXT_PUBLIC_BASE_URL + "campers/",
 });
 
-// Helper function for retry logic with exponential backoff
+// Retry logic for rate limiting
 const wait = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
 async function withRetry<T>(
@@ -26,7 +26,6 @@ async function withRetry<T>(
       if (axios.isAxiosError(error) && error.response?.status === 429) {
         if (i < maxRetries - 1) {
           const delay = baseDelay * Math.pow(2, i);
-          console.log(`Rate limited. Retrying in ${delay}ms... (attempt ${i + 1}/${maxRetries})`);
           await wait(delay);
           continue;
         }
