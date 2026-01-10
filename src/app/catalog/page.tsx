@@ -6,6 +6,8 @@ import {
 import SearchResult from "@/components/Catalog/SearchResult/SearchResult";
 import { fetchCampers } from "@/lib/api";
 import { initialState } from "@/lib/store/store";
+import CatalogFilters from "@/components/Catalog/Sidebar/Filters/CatalogFilters";
+import css from "@/app/catalog/CatalogPage.module.css";
 
 export const generateMetadata = async () => {
   try {
@@ -33,7 +35,16 @@ const CatalogPage = async () => {
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
-      <SearchResult />
+      <section className={css.catalogSection}>
+        <div className={`${css.catalogLayout} container`}>
+          <aside className={`${css.sidebar}`}>
+            <CatalogFilters />
+          </aside>
+          <section className={css.catalogWrapper}>
+            <SearchResult />
+          </section>
+        </div>
+      </section>
     </HydrationBoundary>
   );
 };

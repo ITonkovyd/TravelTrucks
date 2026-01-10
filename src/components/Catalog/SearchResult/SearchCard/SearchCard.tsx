@@ -1,7 +1,5 @@
 "use client";
 
-
-import { useState } from "react";
 import { Camper } from "@/types/camper";
 import css from "./SearchCard.module.css";
 import Image from "next/image";

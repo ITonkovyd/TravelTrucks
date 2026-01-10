@@ -1,7 +1,7 @@
 "use client";
 
-import Filters from "@/components/Catalog/Sidebar/Filters/Filters";
-import Location from "@/components/Catalog/Sidebar/Filters/Location/Location";
+import Filters from "./Filters";
+import Location from "../Filters/Location/Location";
 import { useState } from "react";
 
 const CatalogFilters = () => {
