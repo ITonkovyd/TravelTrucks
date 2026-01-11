@@ -14,7 +14,7 @@ const ITEMS_PER_PAGE = 10;
 const SearchResult = () => {
 
   const hydrateCampers = useCampersStore((state) => state.hydrateCampers);
-  const setSearchFilters = useCampersStore((state) => state.setSearchFilters);
+  const setActiveSearchFilters = useCampersStore((state) => state.setActiveSearchFilters);
   const campersList = useCampersStore((state) => state.campersList);
   const activeSearchFilters = useCampersStore(
     (state) => state.activeSearchFilters
@@ -49,8 +49,10 @@ const SearchResult = () => {
         <button
           className="button button--secondary"
           onClick={() => {
-            setSearchFilters({ page: activeSearchFilters.page + 1 });
-            refetch();
+            setActiveSearchFilters({ 
+              ...activeSearchFilters, 
+              page: activeSearchFilters.page + 1 
+            });
           }}
           disabled={
             activeSearchFilters.page * ITEMS_PER_PAGE >= (data?.total || 0)
